@@ -1,0 +1,39 @@
+version: 0.0
+os: linux
+files:
+    - source: ./
+      destination: /home/ec2-user/starteacher
+    - source: ./codedeploy
+      destination: ./codedeploy
+permissions:
+    - object: /home/ec2-user/starteacher
+      owner: ec2-user
+      group: ec2-user
+      mode: 4755
+hooks:
+    ApplicationStop:
+        - location: ./codedeploy/stop_service.sh
+          timeout: 60
+          runas: ec2-user
+    BeforeInstall:
+        - location: ./codedeploy/remove_directory.sh
+          timeout: 60
+          runas: ec2-user
+    AfterInstall:
+        - location: ./codedeploy/build.sh
+          timeout: 600
+          runas: ec2-user
+    ApplicationStart:
+        - location: ./codedeploy/start_service.sh
+          timeout: 600
+          runas: ec2-user
+    ValidateService:
+        - location: ./codedeploy/validate_service.sh
+          timeout: 60
+          runas: ec2-user
+        - location: ./codedeploy/remove_instructions.sh
+          timeout: 60
+          runas: ec2-user
+        - location: ./codedeploy/restart_agent.sh
+          timeout: 60
+          runas: ec2-user

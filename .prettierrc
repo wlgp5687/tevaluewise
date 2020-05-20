@@ -1,0 +1,11 @@
+{
+  "semi": true,
+  "trailingComma": "all",
+  "tabWidth": 4,
+  "useTabs": true,
+  "singleQuote": true,
+  "printWidth": 200,
+  "bracket Spacing": true,
+  "arrowParens": "always",
+  "disableLanguages": ["yaml"]
+}
